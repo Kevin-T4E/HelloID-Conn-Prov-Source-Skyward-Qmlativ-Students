@@ -10,7 +10,9 @@ Param (
    )
     Process
     {
-        $pair = $ClientKey + ":" + $ClientSecret;
+        $encodedKey = [System.Web.HttpUtility]::UrlEncode($ClientKey);
+        $encodedSecret = [System.Web.HttpUtility]::UrlEncode($ClientSecret);
+        $pair = $encodedKey + ":" + $encodedSecret;
         $bytes = [System.Text.Encoding]::ASCII.GetBytes($pair);
         $bear_token = [System.Convert]::ToBase64String($bytes);
         $auth_headers = @{ Authorization = "Basic " + $bear_token };
